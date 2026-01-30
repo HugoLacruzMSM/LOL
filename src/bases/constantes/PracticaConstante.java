@@ -1,4 +1,4 @@
-package constantes;
+package bases.constantes;
 
 public class PracticaConstante {
     public static void main(String[] args) {
