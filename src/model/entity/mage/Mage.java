@@ -1,8 +1,10 @@
 package model.entity.mage;
 
 import model.entity.Champion;
+import model.entity.interfaces.AggressiveChampion;
+import model.entity.interfaces.HealerChampion;
 
-public class Mage extends Champion {
+public class Mage extends Champion implements AggressiveChampion {
     int mana;
     public Mage(String name, String role, int health, int damage, int mana) {
         super(name, role, health, damage);
@@ -29,5 +31,10 @@ public class Mage extends Champion {
 
     public void setMana(int mana) {
         this.mana = mana;
+    }
+
+    @Override
+    public void attack(Champion objective) {
+
     }
 }

@@ -1,9 +1,9 @@
 package model.entity.assasin;
 
 import model.entity.Champion;
-import model.entity.composer.ChampionComposer;
+import model.entity.interfaces.AggressiveChampion;
 
-public class Assassin extends Champion implements ChampionComposer {
+public class Assassin extends Champion implements AggressiveChampion {
     int critical;
 
     public Assassin(String name, String role, int health, int damage) {

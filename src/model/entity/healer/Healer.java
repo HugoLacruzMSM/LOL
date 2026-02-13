@@ -2,17 +2,14 @@ package model.entity.healer;
 
 import model.entity.Champion;
 import model.entity.Player;
+import model.entity.interfaces.HealerChampion;
 
-public class Healer extends Champion {
+public class Healer extends Champion implements HealerChampion {
 
     public Healer(String name, String role, int health, int damage) {
         super(name, role, health, damage);
     }
 
-
-    public void heal(){
-
-    };
 
     @Override
     public void receiveDamage(int damage) {
@@ -25,6 +22,11 @@ public class Healer extends Champion {
 
     @Override
     public void specialAbility(Champion champion) {
+
+    }
+
+    @Override
+    public void heal() {
 
     }
 }

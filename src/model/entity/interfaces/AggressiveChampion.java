@@ -1,7 +1,7 @@
-package model.entity.composer;
+package model.entity.interfaces;
 
 import model.entity.Champion;
 
-public interface ChampionComposer {
+public interface AggressiveChampion {
     public void attack(Champion objective);
 }
