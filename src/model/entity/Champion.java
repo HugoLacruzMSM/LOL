@@ -1,68 +1,72 @@
 package model.entity;
 
-public class Champion {
+public abstract class Champion {
    private String name;
-   private double size;
-   private boolean mana;
-   private String category;
-   private String description;
-   private int age;
+   private String role;
+   private int health;
+   private int maxHealth;
+   private int damage;
+   private int level;
 
-
-    public Champion() {}
-    public Champion(String name, double size, boolean mana, String category, String description, int age) {
+    public Champion(String name, String role, int health, int damage) {
         this.name = name;
-        this.size = size;
-        this.mana = mana;
-        this.category = category;
-        this.description = description;
-        this.age = age;
-
+        this.role = role;
+        this.health = health;
+        this.maxHealth = health;
+        this.damage = damage;
+        this.level = 1;
     }
 
-    public int getAge() {
-        return age;
+    public abstract void receiveDamage(int damage);
+
+    public void levelUp(){
+        level++;
+        maxHealth += 50;
+        health += 50;
+        damage += 10;
+        System.out.println("The champion "+ getName() +" leveled up to " + level);
+    }
+    public abstract void specialAbility(Champion champion);
+
+
+    public int getDamage() {
+        return damage;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
-    public void greet(){
-        System.out.println("Hello I am " + name + " " + description);
+    public int getHealth() {
+        return health;
     }
 
-
-    public double getSize() {
-        return size;
+    public void setHealth(int health) {
+        this.health = health;
     }
 
-    public void setSize(double size) {
-        this.size = size;
+    public int getLevel() {
+        return level;
     }
 
-    public String getDescription() {
-        return description;
+    public void setLevel(int level) {
+        this.level = level;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
-    public String getCategory() {
-        return category;
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public String getRole() {
+        return role;
     }
 
-    public boolean isMana() {
-        return mana;
-    }
-
-    public void setMana(boolean mana) {
-        this.mana = mana;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getName() {
@@ -71,17 +75,5 @@ public class Champion {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Champion{" +
-                "category='" + category + '\'' +
-                ", name='" + name + '\'' +
-                ", size=" + size +
-                ", mana=" + mana +
-                ", descriptionnnnn='" + description + '\'' +
-                ", age=" + age +
-                '}';
     }
 }
