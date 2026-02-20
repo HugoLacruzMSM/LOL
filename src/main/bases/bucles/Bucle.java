@@ -1,4 +1,4 @@
-package bases.bucles;
+package main.bases.bucles;
 
 public class Bucle {
     public static void main(String[] args) {

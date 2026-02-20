@@ -1,4 +1,4 @@
-package model.entity;
+package main.entity;
 
 public abstract class Champion {
    private String name;
@@ -17,7 +17,13 @@ public abstract class Champion {
         this.level = 1;
     }
 
-    public abstract void receiveDamage(int damage);
+    public void receiveDamage(int damage){
+        this.health -= damage;
+        if (this.health < 0) {
+            this.health = 0;
+        }
+        System.out.println("The champion"+ this.name +" has taken " + damage + " damage. ");
+    }
 
     public void levelUp(){
         level++;

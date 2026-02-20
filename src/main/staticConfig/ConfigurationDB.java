@@ -1,4 +1,4 @@
-package staticConfig;
+package main.staticConfig;
 
 public class ConfigurationDB {
    private static final String URL;

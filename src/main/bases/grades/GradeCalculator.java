@@ -1,4 +1,4 @@
-package bases.grades;
+package main.bases.grades;
 
 import java.util.Scanner;
 

@@ -1,34 +1,27 @@
-package model.entity.assasin;
+package main.entity.assasin;
 
-import model.entity.Champion;
-import model.entity.interfaces.AggressiveChampion;
+import main.entity.Champion;
+import main.entity.interfaces.AggressiveChampion;
 
 public class Assassin extends Champion implements AggressiveChampion {
     int critical;
 
     public Assassin(String name, String role, int health, int damage) {
         super(name, role, health, damage);
-        this.critical = 0;
+        this.critical = 20;
     }
 
     @Override
     public void specialAbility(Champion champion) {
-
+        int critDamage = (getDamage() + critical) * 2;
+        System.out.println(getName() + " executes CRITICAL STRIKE on " + champion.getName());
+        champion.receiveDamage(critDamage);
     }
 
     @Override
     public void attack(Champion objective) {
         System.out.println("The champion"+ getName() +" is attacking to "+ objective.getName());
         objective.receiveDamage(getDamage());
-    }
-
-    @Override
-    public void receiveDamage(int damage) {
-        setHealth(getHealth()-damage);
-        if (getHealth() < 0) {
-            setHealth(0);
-        }
-        System.out.println("The champion"+ getName() +" has taken " + damage + " damage. ");
     }
 
     public int getCritical() {

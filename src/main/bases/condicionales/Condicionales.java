@@ -1,4 +1,4 @@
-package bases.condicionales;
+package main.bases.condicionales;
 
 public class Condicionales {
     public static void main(String[] args) {
