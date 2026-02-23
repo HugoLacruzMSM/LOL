@@ -1,15 +1,15 @@
 package hugo.lol.entity.tank;
 
 import hugo.lol.entity.Champion;
-import hugo.lol.entity.interfaces.AggressiveChampion;
-import hugo.lol.entity.interfaces.HealerChampion;
+import hugo.lol.entity.interfaces.CanAttack;
+import hugo.lol.entity.interfaces.CanHeal;
 
-public class Tank extends Champion implements AggressiveChampion, HealerChampion {
+public class Tank extends Champion implements CanAttack, CanHeal {
 
     int armor;
 
-    public Tank(String name, String role, int health, int damage) {
-        super(name, role, health, damage);
+    public Tank(String name, int health, int damage) {
+        super(name, health, damage);
         this.armor = 50;
     }
 

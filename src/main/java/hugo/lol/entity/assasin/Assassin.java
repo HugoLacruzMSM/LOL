@@ -1,13 +1,13 @@
 package hugo.lol.entity.assasin;
 
 import hugo.lol.entity.Champion;
-import hugo.lol.entity.interfaces.AggressiveChampion;
+import hugo.lol.entity.interfaces.CanAttack;
 
-public class Assassin extends Champion implements AggressiveChampion {
+public class Assassin extends Champion implements CanAttack {
     int critical;
 
-    public Assassin(String name, String role, int health, int damage) {
-        super(name, role, health, damage);
+    public Assassin(String name, int health, int damage) {
+        super(name, health, damage);
         this.critical = 20;
     }
 

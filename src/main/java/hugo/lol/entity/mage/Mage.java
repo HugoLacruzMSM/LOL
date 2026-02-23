@@ -1,13 +1,13 @@
 package hugo.lol.entity.mage;
 
 import hugo.lol.entity.Champion;
-import hugo.lol.entity.interfaces.AggressiveChampion;
+import hugo.lol.entity.interfaces.CanAttack;
 
-public class Mage extends Champion implements AggressiveChampion {
+public class Mage extends Champion implements CanAttack {
     int mana;
 
-    public Mage(String name, String role, int health, int damage, int mana) {
-        super(name, role, health, damage);
+    public Mage(String name, int health, int damage, int mana) {
+        super(name, health, damage);
         this.mana = mana;
     }
 

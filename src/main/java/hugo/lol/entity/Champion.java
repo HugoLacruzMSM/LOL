@@ -2,15 +2,13 @@ package hugo.lol.entity;
 
 public abstract class Champion {
    private String name;
-   private String role;
    private int health;
    private int maxHealth;
    private int damage;
    private int level;
 
-    public Champion(String name, String role, int health, int damage) {
+    public Champion(String name, int health, int damage) {
         this.name = name;
-        this.role = role;
         this.health = health;
         this.maxHealth = health;
         this.damage = damage;
@@ -67,14 +65,6 @@ public abstract class Champion {
         this.maxHealth = maxHealth;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public String getName() {
         return name;
     }
@@ -88,7 +78,6 @@ public abstract class Champion {
         return "Champion{" +
                 "damage=" + damage +
                 ", name='" + name + '\'' +
-                ", role='" + role + '\'' +
                 ", health=" + health +
                 ", maxHealth=" + maxHealth +
                 ", level=" + level +

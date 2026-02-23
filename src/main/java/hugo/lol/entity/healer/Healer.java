@@ -1,14 +1,14 @@
 package hugo.lol.entity.healer;
 
 import hugo.lol.entity.Champion;
-import hugo.lol.entity.interfaces.HealerChampion;
+import hugo.lol.entity.interfaces.CanHeal;
 
-public class Healer extends Champion implements HealerChampion {
+public class Healer extends Champion implements CanHeal {
     int mana;
     private int healPower;
 
-    public Healer(String name, String role, int health, int mana, int healPower) {
-        super(name, role, health, 0);
+    public Healer(String name, int health, int mana, int healPower) {
+        super(name, health, 0);
         this.mana = mana;
         this.healPower = healPower;
     }

@@ -2,6 +2,6 @@ package hugo.lol.entity.interfaces;
 
 import hugo.lol.entity.Champion;
 
-public interface AggressiveChampion {
+public interface CanAttack {
     void attack(Champion objective);
 }

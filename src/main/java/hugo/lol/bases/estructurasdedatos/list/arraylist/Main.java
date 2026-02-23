@@ -22,7 +22,7 @@ public class Main {
     }
 
      static Mage createChamp(String champName) {
-        return new Mage(champName,"Mage",100,100,100);
+        return new Mage(champName,100,100,100);
     }
 
 }

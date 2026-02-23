@@ -22,6 +22,6 @@ public class Main {
     }
 
     static Healer createChamp(String champName) {
-        return new Healer(champName,"Healer",100,100,100);
+        return new Healer(champName,100,100,100);
     }
 }
