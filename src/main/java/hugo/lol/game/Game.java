@@ -1,4 +1,4 @@
-package hugo.lol.scannerExample;
+package hugo.lol.game;
 
 import hugo.lol.entity.Champion;
 import hugo.lol.entity.assasin.Assassin;
