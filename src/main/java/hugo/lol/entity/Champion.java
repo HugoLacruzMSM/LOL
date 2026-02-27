@@ -1,5 +1,7 @@
 package hugo.lol.entity;
 
+import java.util.Objects;
+
 public abstract class Champion {
    private String name;
    private int health;
@@ -82,5 +84,17 @@ public abstract class Champion {
                 ", maxHealth=" + maxHealth +
                 ", level=" + level +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Champion champion = (Champion) o;
+        return health == champion.health && maxHealth == champion.maxHealth && damage == champion.damage && level == champion.level && Objects.equals(name, champion.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, health, maxHealth, damage, level);
     }
 }
