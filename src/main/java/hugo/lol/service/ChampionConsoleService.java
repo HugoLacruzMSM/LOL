@@ -5,15 +5,17 @@ import hugo.lol.entity.assasin.Assassin;
 import hugo.lol.entity.healer.Healer;
 import hugo.lol.entity.mage.Mage;
 import hugo.lol.entity.tank.Tank;
+import hugo.lol.exception.InvalidSelectionException;
 
+import javax.naming.InvalidNameException;
 import java.util.List;
 import java.util.Scanner;
 
-public class UserInteractionService {
+public class ChampionConsoleService {
 
     private final Scanner scanner;
 
-    public UserInteractionService() {
+    public ChampionConsoleService() {
         this.scanner = new Scanner(System.in);
     }
 
@@ -34,19 +36,31 @@ public class UserInteractionService {
         return readInt();
     }
 
-    public int showChampionTypeMenu() {
-        System.out.println("\n--- Create Champion ---");
-        System.out.println("1. Mage (HP:500 | DMG:60 | Mana:300)");
-        System.out.println("2. Assassin (HP:600 | DMG:80 | Crit:20)");
-        System.out.println("3. Tank (HP:1000 | DMG:40 | Armor:50)");
-        System.out.println("4. Healer (HP:700 | Heal:150 | Mana:300)");
-        System.out.print("Type: ");
-        return readInt();
+    public int askChampionType() throws InvalidSelectionException {
+            System.out.println("\n--- Create Champion ---");
+            System.out.println("1. Mage (HP:500 | DMG:60 | Mana:300)");
+            System.out.println("2. Assassin (HP:600 | DMG:80 | Crit:20)");
+            System.out.println("3. Tank (HP:1000 | DMG:40 | Armor:50)");
+            System.out.println("4. Healer (HP:700 | Heal:150 | Mana:300)");
+            System.out.print("Type: ");
+            int selection = readInt();
+
+            if (selection < 1 || selection > 4) {
+                throw new InvalidSelectionException("Invalid selection");
+            }
+            return selection;
     }
 
-    public String askName() {
-        System.out.print("Name: ");
-        return scanner.nextLine().trim();
+    public String askName() throws InvalidNameException {
+            System.out.print("Name: ");
+            String name = scanner.nextLine().trim();
+
+            if (name.isEmpty()) {
+                throw new InvalidNameException("Name is empty");
+            }
+
+            return scanner.nextLine().trim();
+
     }
 
     public void listChampions(List<Champion> champions) {
@@ -54,7 +68,9 @@ public class UserInteractionService {
             System.out.println("\nNo champions yet.");
             return;
         }
+
         System.out.println("\n--- Champions (" + champions.size() + ") ---");
+
         for (int i = 0; i < champions.size(); i++) {
             Champion c = champions.get(i);
             System.out.printf("%d. %s - Lv%d - HP:%d/%d%n",
@@ -63,13 +79,13 @@ public class UserInteractionService {
         }
     }
 
-    public void showStats(Champion c) {
-        System.out.println("\n--- " + c.getName() + " ---");
-        System.out.println("Level: " + c.getLevel());
-        System.out.println("HP: " + c.getHealth() + "/" + c.getMaxHealth());
-        System.out.println("Damage: " + c.getDamage());
+    public void showStats(Champion champion) {
+        System.out.println("\n--- " + champion.getName() + " ---");
+        System.out.println("Level: " + champion.getLevel());
+        System.out.println("HP: " + champion.getHealth() + "/" + champion.getMaxHealth());
+        System.out.println("Damage: " + champion.getDamage());
 
-        switch (c) {
+        switch (champion) {
             case Mage mage -> System.out.println("Mana: " + mage.getMana());
             case Assassin assassin -> System.out.println("Critical: " + assassin.getCritical());
             case Tank tank -> System.out.println("Armor: " + tank.getArmor());
@@ -81,18 +97,13 @@ public class UserInteractionService {
         }
     }
 
-    public int selectChampion(String prompt) {
-        System.out.print(prompt + ": ");
+    public int selectChampion(String consoleMessage) {
+        System.out.print(consoleMessage + ": ");
         return readInt() - 1;
     }
 
     public void showMessage(String message) {
         System.out.println(message);
-    }
-
-    //TODO Eliminar esto y hacer manejo de excepciones
-    public void showError(String error) {
-        System.out.println("Error: " + error);
     }
 
     public void showCombatHeader(Champion c1, Champion c2) {

@@ -6,6 +6,7 @@ import hugo.lol.entity.healer.Healer;
 import hugo.lol.entity.mage.Mage;
 import hugo.lol.entity.tank.Tank;
 import hugo.lol.entity.interfaces.CanHeal;
+import hugo.lol.exception.InvalidSelectionException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,45 +19,42 @@ public class ChampionService {
         this.champions = new ArrayList<>();
     }
 
-    public Champion createChampion(int type, String name) {
-        Champion champion = switch (type) {
-            case 1 -> new Mage(name, 500, 60, 300);
-            case 2 -> new Assassin(name, 600, 80);
-            case 3 -> new Tank(name,  1000, 40);
-            case 4 -> new Healer(name, 700, 300, 150);
-            default -> null;
-        };
+    public Champion createChampion(int type, String name) throws InvalidSelectionException {
+            Champion champion = switch (type) {
+                case 1 -> new Mage(name, 500, 60, 300);
+                case 2 -> new Assassin(name, 600, 80);
+                case 3 -> new Tank(name,  1000, 40);
+                case 4 -> new Healer(name, 700, 300, 150);
+                default -> null;
+            };
 
-        if (champion != null) {
-            champions.add(champion);
-        }
-        return champion;
+            if (champion == null) {
+                throw new InvalidSelectionException("The selected champion can not be null.");
+            }
+            return champion;
     }
 
     public List<Champion> getAllChampions() {
         return new ArrayList<>(champions);
     }
 
-    public Champion getChampion(int index) {
-        if (index >= 0 && index < champions.size()) {
+    public Champion getChampion(int index) throws IndexOutOfBoundsException {
             return champions.get(index);
-        }
-        return null;
     }
 
     public List<Champion> getHealers() {
         return champions.stream()
-                .filter(c -> c instanceof CanHeal)
+                .filter(champion -> champion instanceof CanHeal)
                 .toList();
     }
 
     public void combat(Champion attacker, Champion defender) {
-        attacker.receiveDamage(defender.getDamage());
-        if (attacker.getHealth() > 0) {
-            defender.receiveDamage(attacker.getDamage());
+        defender.receiveDamage(attacker.getDamage());
+        if (defender.getHealth() > 0) {
+            attacker.receiveDamage(defender.getDamage());
         }
 
-        if (attacker.getHealth() > 0 && defender.getHealth() > 0) {
+        if (defender.getHealth() > 0 && attacker.getHealth() > 0) {
             attacker.specialAbility(defender);
             if (defender.getHealth() > 0) {
                 defender.specialAbility(attacker);

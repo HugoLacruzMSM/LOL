@@ -1,163 +1,195 @@
 package hugo.lol.controller.game;
 
 import hugo.lol.entity.Champion;
+import hugo.lol.entity.healer.Healer;
 import hugo.lol.entity.interfaces.CanHeal;
+import hugo.lol.exception.InvalidSelectionException;
 import hugo.lol.service.ChampionService;
-import hugo.lol.service.UserInteractionService;
+import hugo.lol.service.ChampionConsoleService;
 
+import javax.naming.InvalidNameException;
 import java.util.List;
 
 public class GameController {
 
     //TODO Cambiar esto en la siguiente hora con manejo de excepciones
     private final ChampionService championService;
-    private final UserInteractionService userInteractionService;
+    private final ChampionConsoleService championConsoleService;
 
     public GameController() {
         this.championService = new ChampionService();
-        this.userInteractionService = new UserInteractionService();
+        this.championConsoleService = new ChampionConsoleService();
     }
 
     public void start() {
-        userInteractionService.showWelcome();
+        try {
+            championConsoleService.showWelcome();
 
-        boolean running = true;
-        while (running) {
-            int option = userInteractionService.showMainMenu();
+            boolean running = true;
+            while (running) {
+                int option = championConsoleService.showMainMenu();
 
-            switch (option) {
-                case 1 -> createChampion();
-                case 2 -> listChampions();
-                case 3 -> showStats();
-                case 4 -> simulateCombat();
-                case 5 -> levelUp();
-                case 6 -> heal();
-                case 0 -> running = false;
-                default -> userInteractionService.showError("Invalid option");
+                switch (option) {
+                    case 1 -> createChampionMenu();
+                    case 2 -> showAllChampions();
+                    case 3 -> showStats();
+                    case 4 -> simulateCombatMenu();
+                    case 5 -> levelUpMenu();
+                    case 6 -> healMenu();
+                    case 0 -> running = false;
+                    default -> throw new InvalidSelectionException("Invalid option");
+                }
             }
-        }
 
-        userInteractionService.close();
-    }
-
-    private void createChampion() {
-        int type = userInteractionService.showChampionTypeMenu();
-        String name = userInteractionService.askName();
-
-        if (name.isEmpty()) {
-            userInteractionService.showError("Name cannot be empty");
-            return;
-        }
-
-        Champion champion = championService.createChampion(type, name);
-        //TODO Hacer manejo de excepción y enseñar el mensaje ahí
-        if (champion != null) {
-            userInteractionService.showMessage("Created: " + champion.getName() + " (" + championService.size() + " total)");
-        } else {
-            userInteractionService.showError("Invalid type");
+            championConsoleService.close();
+        } catch (InvalidSelectionException e) {
+            start();
         }
     }
 
-    private void listChampions() {
-        userInteractionService.listChampions(championService.getAllChampions());
+    private void createChampionMenu() {
+        int type = askChampionType();
+        String name = askName();
+        Champion champion = createChampion(type,name);
+        championConsoleService.showMessage("Created: " + champion.getName() + " (" + championService.size() + " total)");
     }
 
-    private void showStats() {
-        if (championService.isEmpty()) {
-            userInteractionService.showError("No champions available");
-            return;
-        }
-
-        userInteractionService.listChampions(championService.getAllChampions());
-        int index = userInteractionService.selectChampion("Select champion");
-
-        Champion champion = championService.getChampion(index);
-        //TODO Hacer manejo de excepción y enseñar el mensaje ahí
-        if (champion != null) {
-            userInteractionService.showStats(champion);
-        } else {
-            userInteractionService.showError("Invalid selection");
-        }
-    }
-
-    private void simulateCombat() {
+    private void simulateCombatMenu() {
         if (championService.size() < 2) {
-            userInteractionService.showError("Need at least 2 champions");
+            championConsoleService.showMessage("Need at least 2 champions");
             return;
         }
 
-        userInteractionService.listChampions(championService.getAllChampions());
-        int idx1 = userInteractionService.selectChampion("Select attacker");
-        int idx2 = userInteractionService.selectChampion("Select defender");
+        showAllChampions();
+        try {
+            Champion attacker = selectAttacker();
+            Champion defender = selectDefender();
 
-        Champion attacker = championService.getChampion(idx1);
-        Champion defender = championService.getChampion(idx2);
+            if (attacker == defender) {
+                throw new InvalidSelectionException("Attacker and defender can not be the same");
+            }
 
-        //TODO Hacer manejo de excepción y enseñar el mensaje ahí
-        if (attacker == null || defender == null || idx1 == idx2) {
-            userInteractionService.showError("Invalid selection");
+            simulateCombat(attacker, defender);
+        } catch (IndexOutOfBoundsException | InvalidSelectionException e) {
+            simulateCombatMenu();
+        }
+    }
+
+    private void levelUpMenu() {
+        if (championService.isEmpty()) {
+            championConsoleService.showMessage("No champions found");
             return;
         }
 
-        userInteractionService.showCombatHeader(attacker, defender);
-        userInteractionService.showRound(1, "Basic Attack");
+        showAllChampions();
+
+        int index = championConsoleService.selectChampion("Select champion to level up");
+        try {
+            levelUp(index);
+        }catch (IndexOutOfBoundsException e) {
+            levelUpMenu();
+        }
+    }
+
+    private void healMenu() {
+
+        if (championService.isEmpty() || championService.getHealers().isEmpty()) {
+            championConsoleService.showMessage("No healers available");
+            return;
+        }
+
+        try {
+
+        Healer healerChampion = selectHealer();
+
+        showAllChampions();
+
+        Champion targetChampion = selectChampion();
+
+        heal(healerChampion,targetChampion);
+        }catch (IndexOutOfBoundsException e) {
+            healMenu();
+        }
+    }
+
+    private int askChampionType() {
+        try {
+            return championConsoleService.askChampionType();
+        } catch (Exception e) {
+            return askChampionType();
+        }
+    }
+
+    private String askName() {
+        try {
+            return championConsoleService.askName();
+        } catch (InvalidNameException e) {
+            return askName();
+        }
+    }
+
+    private void showStats() throws InvalidSelectionException {
+        if (championService.isEmpty()) {
+            championConsoleService.showMessage("No champions found");
+            return;
+        }
+        try {
+            championConsoleService.showStats(selectChampion());
+        } catch (IndexOutOfBoundsException e) {
+            championConsoleService.showStats(selectChampion());
+        }
+    }
+
+    private void showAllChampions(){
+        championConsoleService.listChampions(championService.getAllChampions());
+    }
+
+    private void simulateCombat(Champion attacker, Champion defender) {
+        championConsoleService.showCombatHeader(attacker, defender);
+        championConsoleService.showRound(1, "Basic Attack");
         championService.combat(attacker, defender);
 
-        userInteractionService.showMessage("\n" + championService.getCombatResult(attacker, defender));
+        championConsoleService.showMessage("\n" + championService.getCombatResult(attacker, defender));
     }
 
-    private void levelUp() {
-        //TODO Hacer manejo de excepción y enseñar el mensaje ahí
-        if (championService.isEmpty()) {
-            userInteractionService.showError("No champions available");
-            return;
-        }
-
-        userInteractionService.listChampions(championService.getAllChampions());
-        int index = userInteractionService.selectChampion("Select champion to level up");
-
-        Champion champion = championService.getChampion(index);
-        //TODO Hacer manejo de excepción y enseñar el mensaje ahí
-        if (champion != null) {
-            champion.levelUp();
-        } else {
-            userInteractionService.showError("Invalid selection");
+    private Champion createChampion(int type, String name) {
+        try {
+            return championService.createChampion(type, name);
+        } catch (InvalidSelectionException e) {
+            return createChampion(type,name);
         }
     }
 
-    private void heal() {
-        //TODO Hacer manejo de excepción y enseñar el mensaje ahí
-        if (championService.isEmpty()) {
-            userInteractionService.showError("No champions available");
-            return;
-        }
+    private void levelUp(int championIndex) throws IndexOutOfBoundsException{
+        Champion champion = championService.getChampion(championIndex);
+        champion.levelUp();
+    }
 
+    private void heal(Healer healer, Champion target) throws IndexOutOfBoundsException{
+        healer.heal(target);
+    }
+
+    private Champion selectChampion() throws IndexOutOfBoundsException {
+        showAllChampions();
+        int index = championConsoleService.selectChampion("Select champion");
+        return championService.getChampion(index);
+    }
+
+    private Champion selectAttacker() throws IndexOutOfBoundsException {
+        int attacker = championConsoleService.selectChampion("Select attacker");
+        return championService.getChampion(attacker);
+    }
+
+    private Champion selectDefender() throws IndexOutOfBoundsException {
+        int defender = championConsoleService.selectChampion("Select defender");
+        return championService.getChampion(defender);
+    }
+
+    private Healer selectHealer()throws IndexOutOfBoundsException{
         List<Champion> healers = championService.getHealers();
-        //TODO Hacer manejo de excepción y enseñar el mensaje ahí
-        if (healers.isEmpty()) {
-            userInteractionService.showError("No healers available");
-            return;
-        }
+        championConsoleService.listChampions(healers);
 
-        userInteractionService.listChampions(healers);
-        int healerIdx = userInteractionService.selectChampion("Select healer");
-
-        Champion healerChampion = healers.get(healerIdx);
-        //TODO Hacer manejo de excepción y enseñar el mensaje ahí
-        if (!(healerChampion instanceof CanHeal healer)) {
-            userInteractionService.showError("Invalid healer");
-            return;
-        }
-
-        userInteractionService.listChampions(championService.getAllChampions());
-        int targetIdx = userInteractionService.selectChampion("Select target");
-
-        Champion target = championService.getChampion(targetIdx);
-        //TODO Hacer manejo de excepción y enseñar el mensaje ahí
-        if (target != null) {
-            healer.heal(target);
-        } else {
-            userInteractionService.showError("Invalid target");
-        }
+        int healerIdx = championConsoleService.selectChampion("Select healer");
+        return (Healer) healers.get(healerIdx);
     }
 }
