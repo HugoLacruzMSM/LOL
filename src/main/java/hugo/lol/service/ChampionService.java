@@ -31,6 +31,7 @@ public class ChampionService {
             if (champion == null) {
                 throw new InvalidSelectionException("The selected champion can not be null.");
             }
+            champions.add(champion);
             return champion;
     }
 

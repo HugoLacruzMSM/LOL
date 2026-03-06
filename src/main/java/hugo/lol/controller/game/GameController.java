@@ -2,7 +2,6 @@ package hugo.lol.controller.game;
 
 import hugo.lol.entity.Champion;
 import hugo.lol.entity.healer.Healer;
-import hugo.lol.entity.interfaces.CanHeal;
 import hugo.lol.exception.InvalidSelectionException;
 import hugo.lol.service.ChampionService;
 import hugo.lol.service.ChampionConsoleService;
@@ -12,7 +11,6 @@ import java.util.List;
 
 public class GameController {
 
-    //TODO Cambiar esto en la siguiente hora con manejo de excepciones
     private final ChampionService championService;
     private final ChampionConsoleService championConsoleService;
 

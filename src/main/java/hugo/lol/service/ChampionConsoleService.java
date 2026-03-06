@@ -70,10 +70,17 @@ public class ChampionConsoleService {
         }
 
         System.out.println("\n--- Champions (" + champions.size() + ") ---");
-
+/*
+%d: (int).
+%f: (double, float).
+%s: (String).
+%c: (char).
+%b: (boolean).
+%%: %.
+* */
         for (int i = 0; i < champions.size(); i++) {
             Champion c = champions.get(i);
-            System.out.printf("%d. %s - Lv%d - HP:%d/%d%n",
+            System.out.printf("%d. %s - Lv%d - HP:%d/%d",
                     i + 1, c.getName(),
                     c.getLevel(), c.getHealth(), c.getMaxHealth());
         }
