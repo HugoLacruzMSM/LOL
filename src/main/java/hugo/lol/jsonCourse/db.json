@@ -1,0 +1,12 @@
+{
+  "name": "Lux",
+  "age": 28,
+  "canHeal": false,
+  "damage": 200,
+  "son": {
+    "name": "Lux",
+    "age": 28,
+    "canHeal": false,
+    "damage": 200
+  }
+}

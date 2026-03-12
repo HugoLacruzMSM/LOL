@@ -152,8 +152,10 @@ public class GameController {
 
     private Champion createChampion(int type, String name) {
         try {
+            //log.debug("Created champ");
             return championService.createChampion(type, name);
         } catch (InvalidSelectionException e) {
+            //log.warn(e.getMessage)
             return createChampion(type,name);
         }
     }
