@@ -2,6 +2,10 @@ package hugo.lol.controller.game;
 
 import hugo.lol.entity.Champion;
 import hugo.lol.entity.healer.Healer;
+import hugo.lol.entity.item.Item;
+import hugo.lol.entity.item.consumable.ConsumableItem;
+import hugo.lol.entity.item.equipment.EquipmentItem;
+import hugo.lol.entity.shop.Shop;
 import hugo.lol.exception.InvalidSelectionException;
 import hugo.lol.service.ChampionService;
 import hugo.lol.service.ChampionConsoleService;
@@ -13,10 +17,13 @@ public class GameController {
 
     private final ChampionService championService;
     private final ChampionConsoleService championConsoleService;
+    private Shop shop;
 
     public GameController() {
         this.championService = new ChampionService();
         this.championConsoleService = new ChampionConsoleService();
+        this.shop = new Shop("Item Shop");
+        loadShopItems();
     }
 
     public void start() {
@@ -34,6 +41,8 @@ public class GameController {
                     case 4 -> simulateCombatMenu();
                     case 5 -> levelUpMenu();
                     case 6 -> healMenu();
+                    case 7 -> inventoryMenu();
+                    case 8 -> shopMenu();
                     case 0 -> running = false;
                     default -> throw new InvalidSelectionException("Invalid option");
                 }
@@ -108,6 +117,43 @@ public class GameController {
         }catch (IndexOutOfBoundsException e) {
             healMenu();
         }
+    }
+
+    private void inventoryMenu() {
+        if (championService.isEmpty()) {
+            championConsoleService.showMessage("No champions.");
+            return;
+        }
+        Champion champion = selectChampion();
+        championConsoleService.showInventory(champion);
+
+        System.out.println("1. Use consumable");
+        System.out.println("2. Equip armor");
+        System.out.println("0. Back");
+    }
+
+    private void shopMenu() {
+        if (championService.isEmpty()) {
+            championConsoleService.showMessage("No champions.");
+            return;
+        }
+        championConsoleService.showShop(shop);
+        Champion champion = selectChampion();
+
+        List<Item> stock = shop.getStock();
+        for (int i = 0; i < stock.size(); i++) {
+            System.out.println((i + 1) + ". " + stock.get(i));
+        }
+        int itemIndex = championConsoleService.selectItem("Select item to buy");
+        if (itemIndex < 0 || itemIndex >= stock.size()){
+            return;
+        }
+
+        championService.buyItem(
+                championService.getAllChampions().indexOf(champion),
+                stock.get(itemIndex),
+                shop
+        );
     }
 
     private int askChampionType() {
@@ -191,5 +237,12 @@ public class GameController {
 
         int healerIdx = championConsoleService.selectChampion("Select healer");
         return (Healer) healers.get(healerIdx);
+    }
+
+    private void loadShopItems() {
+        shop.addStock(new EquipmentItem("Iron Helmet", 100, 1, 1, 50, 0));
+        shop.addStock(new EquipmentItem("Chainmail", 200, 2, 2, 100, 10));
+        shop.addStock(new ConsumableItem("Health Potion", 50, 150));
+        shop.addStock(new ConsumableItem("Mega Potion", 100, 300));
     }
 }

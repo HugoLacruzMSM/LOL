@@ -3,7 +3,9 @@ package hugo.lol.service;
 import hugo.lol.entity.Champion;
 import hugo.lol.entity.assasin.Assassin;
 import hugo.lol.entity.healer.Healer;
+import hugo.lol.entity.inventory.equipment.type.EquipmentSlot;
 import hugo.lol.entity.mage.Mage;
+import hugo.lol.entity.shop.Shop;
 import hugo.lol.entity.tank.Tank;
 import hugo.lol.exception.InvalidSelectionException;
 
@@ -134,5 +136,30 @@ public class ChampionConsoleService {
         int value = scanner.nextInt();
         scanner.nextLine();
         return value;
+    }
+
+    public void showInventory(Champion champion) {
+        System.out.println("\n--- " + champion.getName() + " Inventory ---");
+        champion.getInventory().print();
+    }
+
+    public void showShop(Shop shop) {
+        shop.printStock();
+    }
+
+    public int selectItem(String message) {
+        System.out.print(message + ": ");
+        return readInt() - 1;
+    }
+
+    public EquipmentSlot selectEquipmentSlot() {
+        System.out.println("Slots: ");
+        EquipmentSlot[] slots = EquipmentSlot.values();
+        for (int i = 0; i < slots.length; i++) {
+            System.out.println((i + 1) + ". " + slots[i]);
+        }
+        System.out.print("Slot: ");
+        int index = readInt() - 1;
+        return slots[index];
     }
 }
