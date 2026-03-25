@@ -19,10 +19,17 @@ public class EquipmentItem extends Item {
         champion.setDamage(champion.getDamage() + bonusDamage);
         champion.setHealth(champion.getHealth() + bonusHealth);
         champion.setMaxHealth(champion.getMaxHealth() + bonusHealth);
+        System.out.println(champion.getName() + " equipped " + getName()
+                + " [+" + bonusHealth + " HP, +" + bonusDamage + " dmg]");
     }
 
     public int getBonusDamage() { return bonusDamage; }
     public int getBonusHealth() { return bonusHealth; }
+
+    @Override
+    public String toString() {
+        return getName() + " [+" + bonusHealth + " HP, +" + bonusDamage + " dmg] (" + getPrice() + "g)";
+    }
 }
 
 

@@ -15,7 +15,13 @@ public class ConsumableItem extends Item {
     public void applyEffect(Champion champion) {
         int newHealth = Math.min(champion.getHealth() + healAmount, champion.getMaxHealth());
         champion.setHealth(newHealth);
+        System.out.println(champion.getName() + " healed " + healAmount + " HP.");
     }
 
     public int getHealAmount() { return healAmount; }
+
+    @Override
+    public String toString() {
+        return getName() + " [+" + healAmount + " HP] (" + getPrice() + "g)";
+    }
 }
