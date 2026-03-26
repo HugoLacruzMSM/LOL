@@ -50,10 +50,6 @@ public class ChampionService {
         return champion.getInventory().equipArmor(slot, equipmentItem, champion);
     }
 
-    public boolean useConsumable(int championIndex, int consumableIndex) {
-        Champion champion = getChampion(championIndex);
-        return champion.getInventory().useConsumable(consumableIndex, champion);
-    }
 
     public boolean addConsumable(int championIndex, ConsumableItem consumableItem) {
         Champion champion = getChampion(championIndex);

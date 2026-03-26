@@ -21,15 +21,7 @@ public abstract class Item {
 
     public abstract void applyEffect(Champion champion);
 
-    public List<Position> getOccupiedCells(int startRow, int startCol) {
-        List<Position> positions = new ArrayList<>();
-        for (int row = startRow; row < startRow + height; row++) {
-            for (int column = startCol; column < startCol + width; column++) {
-                positions.add(new Position(row, column));
-            }
-        }
-        return positions;
-    }
+
 
     public String getName() { return name; }
     public int getPrice() { return price; }

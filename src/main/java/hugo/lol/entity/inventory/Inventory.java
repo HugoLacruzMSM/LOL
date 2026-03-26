@@ -26,10 +26,6 @@ public class Inventory {
         return consumableBag.add(consumableItem);
     }
 
-    public boolean useConsumable(int index, Champion champion) {
-        return consumableBag.use(index, champion);
-    }
-
     public void print() {
         equipmentSlots.print();
         consumableBag.print();

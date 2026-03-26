@@ -3,9 +3,6 @@ package hugo.lol.controller.game;
 import hugo.lol.entity.Champion;
 import hugo.lol.entity.healer.Healer;
 import hugo.lol.entity.inventory.ConsumableBag;
-import hugo.lol.entity.inventory.equipment.EquipmentSlots;
-import hugo.lol.entity.inventory.equipment.type.EquipmentSlot;
-import hugo.lol.entity.inventory.grid.InventoryGrid;
 import hugo.lol.entity.item.Item;
 import hugo.lol.entity.item.consumable.ConsumableItem;
 import hugo.lol.entity.item.equipment.EquipmentItem;
@@ -15,7 +12,6 @@ import hugo.lol.service.ChampionService;
 import hugo.lol.service.ChampionConsoleService;
 
 import javax.naming.InvalidNameException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
@@ -154,9 +150,7 @@ public class GameController {
         bag.print();
         int index = championConsoleService.selectItem("Select consumable");
 
-        if (!champion.getInventory().useConsumable(index, champion)) {
-            championConsoleService.showMessage("Invalid selection.");
-        }
+        //usar consumible
     }
 
     private void shopMenu() {
