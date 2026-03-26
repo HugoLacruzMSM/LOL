@@ -2,6 +2,10 @@ package hugo.lol.controller.game;
 
 import hugo.lol.entity.Champion;
 import hugo.lol.entity.healer.Healer;
+import hugo.lol.entity.inventory.ConsumableBag;
+import hugo.lol.entity.inventory.equipment.EquipmentSlots;
+import hugo.lol.entity.inventory.equipment.type.EquipmentSlot;
+import hugo.lol.entity.inventory.grid.InventoryGrid;
 import hugo.lol.entity.item.Item;
 import hugo.lol.entity.item.consumable.ConsumableItem;
 import hugo.lol.entity.item.equipment.EquipmentItem;
@@ -11,13 +15,14 @@ import hugo.lol.service.ChampionService;
 import hugo.lol.service.ChampionConsoleService;
 
 import javax.naming.InvalidNameException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
 
     private final ChampionService championService;
     private final ChampionConsoleService championConsoleService;
-    private Shop shop;
+    private final Shop shop;
 
     public GameController() {
         this.championService = new ChampionService();
@@ -124,12 +129,34 @@ public class GameController {
             championConsoleService.showMessage("No champions.");
             return;
         }
+
         Champion champion = selectChampion();
         championConsoleService.showInventory(champion);
 
-        System.out.println("1. Use consumable");
-        System.out.println("2. Equip armor");
-        System.out.println("0. Back");
+        int option = championConsoleService.showInventoryMenu();
+
+        switch (option) {
+            case 1 -> useConsumableMenu(champion);
+            //case 2 -> //aqui equipo la armadura al campeon;
+            case 0 -> {}
+            default -> championConsoleService.showMessage("Invalid option.");
+        }
+    }
+
+    private void useConsumableMenu(Champion champion) {
+        ConsumableBag bag = champion.getInventory().getConsumableBag();
+
+        if (bag.isEmpty()) {
+            championConsoleService.showMessage("No consumables.");
+            return;
+        }
+
+        bag.print();
+        int index = championConsoleService.selectItem("Select consumable");
+
+        if (!champion.getInventory().useConsumable(index, champion)) {
+            championConsoleService.showMessage("Invalid selection.");
+        }
     }
 
     private void shopMenu() {

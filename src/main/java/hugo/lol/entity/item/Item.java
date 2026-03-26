@@ -1,7 +1,7 @@
 package hugo.lol.entity.item;
 
 import hugo.lol.entity.Champion;
-import hugo.lol.entity.inventory.Position;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

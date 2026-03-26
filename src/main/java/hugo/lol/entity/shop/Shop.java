@@ -30,10 +30,8 @@ public class Shop {
             System.out.println(champion.getName() + " can't afford " + item.getName() + ".");
             return false;
         }
-        if (!inventory.storeItem(item)) {
-            System.out.println("Inventory full, can't buy " + item.getName() + ".");
-            return false;
-        }
+
+        // condicion si el inventario esta lleno y no puedo comprar
         champion.spendGold(item.getPrice());
         stock.remove(item);
         System.out.println(champion.getName() + " bought " + item.getName() + ".");

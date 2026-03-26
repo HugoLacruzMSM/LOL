@@ -24,15 +24,6 @@ public class ConsumableBag {
         return true;
     }
 
-    public boolean use(int index, Champion champion) {
-        if (index < 0 || index >= items.size()){
-            return false;
-        }
-        ConsumableItem item = items.remove(index);
-        item.applyEffect(champion);
-        return true;
-    }
-
     public ConsumableItem get(int index) {
         if (index < 0 || index >= items.size()){
             return null;

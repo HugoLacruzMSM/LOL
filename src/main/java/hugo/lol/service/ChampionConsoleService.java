@@ -21,23 +21,6 @@ public class ChampionConsoleService {
         this.scanner = new Scanner(System.in);
     }
 
-    public void showWelcome() {
-        System.out.println("\n=== LEAGUE CHAMPION MANAGER ===\n");
-    }
-
-    public int showMainMenu() {
-        System.out.println("\n--- Main Menu ---");
-        System.out.println("1. Create Champion");
-        System.out.println("2. List Champions");
-        System.out.println("3. Show Stats");
-        System.out.println("4. Simulate Combat");
-        System.out.println("5. Level Up");
-        System.out.println("6. Heal");
-        System.out.println("0. Exit");
-        System.out.print("Option: ");
-        return readInt();
-    }
-
     public int askChampionType() throws InvalidSelectionException {
             System.out.println("\n--- Create Champion ---");
             System.out.println("1. Mage (HP:500 | DMG:60 | Mana:300)");
@@ -88,6 +71,40 @@ public class ChampionConsoleService {
         }
     }
 
+    public int selectChampion(String consoleMessage) {
+        System.out.print(consoleMessage + ": ");
+        return readInt() - 1;
+    }
+
+    public void showMessage(String message) {
+        System.out.println(message);
+    }
+
+    public void showCombatHeader(Champion c1, Champion c2) {
+        System.out.println("\n=== " + c1.getName() + " VS " + c2.getName() + " ===");
+    }
+
+    public void showRound(int round, String description) {
+        System.out.println("\n[Round " + round + " - " + description + "]");
+    }
+
+    public int showInventoryMenu() {
+        System.out.println("\n1. Use consumable");
+        System.out.println("2. Equip armor");
+        System.out.println("0. Back");
+        System.out.print("Option: ");
+        return readInt();
+    }
+
+    public void showInventory(Champion champion) {
+        System.out.println("\n--- " + champion.getName() + " Inventory ---");
+        champion.getInventory().print();
+    }
+
+    public void showShop(Shop shop) {
+        shop.printStock();
+    }
+
     public void showStats(Champion champion) {
         System.out.println("\n--- " + champion.getName() + " ---");
         System.out.println("Level: " + champion.getLevel());
@@ -106,21 +123,21 @@ public class ChampionConsoleService {
         }
     }
 
-    public int selectChampion(String consoleMessage) {
-        System.out.print(consoleMessage + ": ");
-        return readInt() - 1;
+    public void showWelcome() {
+        System.out.println("\n=== LEAGUE CHAMPION MANAGER ===\n");
     }
 
-    public void showMessage(String message) {
-        System.out.println(message);
-    }
-
-    public void showCombatHeader(Champion c1, Champion c2) {
-        System.out.println("\n=== " + c1.getName() + " VS " + c2.getName() + " ===");
-    }
-
-    public void showRound(int round, String description) {
-        System.out.println("\n[Round " + round + " - " + description + "]");
+    public int showMainMenu() {
+        System.out.println("\n--- Main Menu ---");
+        System.out.println("1. Create Champion");
+        System.out.println("2. List Champions");
+        System.out.println("3. Show Stats");
+        System.out.println("4. Simulate Combat");
+        System.out.println("5. Level Up");
+        System.out.println("6. Heal");
+        System.out.println("0. Exit");
+        System.out.print("Option: ");
+        return readInt();
     }
 
     public void close() {
@@ -136,15 +153,6 @@ public class ChampionConsoleService {
         int value = scanner.nextInt();
         scanner.nextLine();
         return value;
-    }
-
-    public void showInventory(Champion champion) {
-        System.out.println("\n--- " + champion.getName() + " Inventory ---");
-        champion.getInventory().print();
-    }
-
-    public void showShop(Shop shop) {
-        shop.printStock();
     }
 
     public int selectItem(String message) {
