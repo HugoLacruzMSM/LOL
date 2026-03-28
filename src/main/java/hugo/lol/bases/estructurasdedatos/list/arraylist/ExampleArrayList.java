@@ -3,13 +3,12 @@ package hugo.lol.bases.estructurasdedatos.list.arraylist;
 import hugo.lol.entity.mage.Mage;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class Main {
+public class ExampleArrayList {
 
     public static void main(String[] args) {
 
-        List<Mage> mages = new ArrayList<>();
+        ArrayList<Mage> mages = new ArrayList<>();
         mages.add(createChamp("Manolo"));
         mages.add(createChamp("Hugo"));
         mages.add(createChamp("Juanra"));
@@ -18,6 +17,12 @@ public class Main {
 
         System.out.println(mages);
         System.out.println(mages.get(1));
+        mages.set(2,createChamp("Valen"));
+        System.out.println("Set: "+mages);
+
+        mages.add(1,createChamp("Alberto"));
+        System.out.println(mages);
+
 
     }
 

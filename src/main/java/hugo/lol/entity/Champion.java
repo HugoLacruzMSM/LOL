@@ -10,10 +10,10 @@ public abstract class Champion {
    private int maxHealth;
    private int damage;
    private int level;
-    private int gold;
-    private final Inventory inventory;
+   private int gold;
+   private final Inventory inventory;
 
-    public Champion(String name, int health, int damage, Inventory inventory) {
+    public Champion(String name, int health, int damage) {
         this.name = name;
         this.health = health;
         this.maxHealth = health;
