@@ -1,7 +1,5 @@
 package hugo.lol.entity;
 
-import hugo.lol.entity.inventory.Inventory;
-
 import java.util.Objects;
 
 public abstract class Champion {
@@ -11,7 +9,6 @@ public abstract class Champion {
    private int damage;
    private int level;
    private int gold;
-   private final Inventory inventory;
 
     public Champion(String name, int health, int damage) {
         this.name = name;
@@ -20,7 +17,6 @@ public abstract class Champion {
         this.damage = damage;
         this.level = 1;
         this.gold = 500;
-        this.inventory = new Inventory(6,5,5);
     }
 
     public boolean canAfford(int amount) {
@@ -28,7 +24,7 @@ public abstract class Champion {
     }
 
     public void spendGold(int amount) throws IllegalStateException {
-        if (canAfford(amount)){
+        if (!canAfford(amount)){
             throw new IllegalStateException("Not enough gold.");
         }
         this.gold -= amount;
@@ -98,7 +94,6 @@ public abstract class Champion {
 
     public int getGold() { return gold; }
 
-    public Inventory getInventory() { return inventory; }
 
     @Override
     public String toString() {

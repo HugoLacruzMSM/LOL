@@ -2,7 +2,6 @@ package hugo.lol.entity.mage;
 
 import hugo.lol.entity.Champion;
 import hugo.lol.entity.interfaces.CanAttack;
-import hugo.lol.entity.inventory.Inventory;
 
 public class Mage extends Champion implements CanAttack {
     int mana;

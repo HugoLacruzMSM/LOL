@@ -1,0 +1,10 @@
+[
+  {"type": "MAGE",     "name": "Lux",  "health": 500, "damage": 60, "mana": 300},
+  {"type": "MAGE",     "name": "Ryze",   "health": 500, "damage": 60, "mana": 300},
+  {"type": "ASSASSIN", "name": "Zed",      "health": 600, "damage": 80},
+  {"type": "ASSASSIN", "name": "Talon",    "health": 600, "damage": 80},
+  {"type": "TANK",     "name": "Malphite", "health": 1000,"damage": 40},
+  {"type": "TANK",     "name": "Galio",    "health": 1000,"damage": 40},
+  {"type": "HEALER",   "name": "Soraka",   "health": 700, "damage": 0, "mana": 300, "healPower": 150},
+  {"type": "HEALER",   "name": "Sona",     "health": 700, "damage": 0, "mana": 300, "healPower": 150}
+]

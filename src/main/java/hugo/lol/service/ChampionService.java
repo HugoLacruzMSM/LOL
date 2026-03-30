@@ -3,12 +3,7 @@ package hugo.lol.service;
 import hugo.lol.entity.Champion;
 import hugo.lol.entity.assasin.Assassin;
 import hugo.lol.entity.healer.Healer;
-import hugo.lol.entity.inventory.equipment.type.EquipmentSlot;
-import hugo.lol.entity.item.Item;
-import hugo.lol.entity.item.consumable.ConsumableItem;
-import hugo.lol.entity.item.equipment.EquipmentItem;
 import hugo.lol.entity.mage.Mage;
-import hugo.lol.entity.shop.Shop;
 import hugo.lol.entity.tank.Tank;
 import hugo.lol.entity.interfaces.CanHeal;
 import hugo.lol.exception.InvalidSelectionException;
@@ -22,6 +17,10 @@ public class ChampionService {
 
     public ChampionService() {
         this.champions = new ArrayList<>();
+    }
+
+    public void loadAll(List<Champion> champions) {
+        this.champions.addAll(champions);
     }
 
     public Champion createChampion(int type, String name) throws InvalidSelectionException {
@@ -38,22 +37,6 @@ public class ChampionService {
             }
             champions.add(champion);
             return champion;
-    }
-
-    public boolean buyItem(int championIndex, Item item, Shop shop) {
-        Champion champion = getChampion(championIndex);
-        return shop.sell(item, champion, champion.getInventory());
-    }
-
-    public boolean equipArmor(int championIndex, EquipmentSlot slot, EquipmentItem equipmentItem) {
-        Champion champion = getChampion(championIndex);
-        return champion.getInventory().equipArmor(slot, equipmentItem, champion);
-    }
-
-
-    public boolean addConsumable(int championIndex, ConsumableItem consumableItem) {
-        Champion champion = getChampion(championIndex);
-        return champion.getInventory().addConsumable(consumableItem);
     }
 
     public List<Champion> getAllChampions() {

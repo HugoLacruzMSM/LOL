@@ -3,9 +3,7 @@ package hugo.lol.service;
 import hugo.lol.entity.Champion;
 import hugo.lol.entity.assasin.Assassin;
 import hugo.lol.entity.healer.Healer;
-import hugo.lol.entity.inventory.equipment.type.EquipmentSlot;
 import hugo.lol.entity.mage.Mage;
-import hugo.lol.entity.shop.Shop;
 import hugo.lol.entity.tank.Tank;
 import hugo.lol.exception.InvalidSelectionException;
 
@@ -19,33 +17,6 @@ public class ChampionConsoleService {
 
     public ChampionConsoleService() {
         this.scanner = new Scanner(System.in);
-    }
-
-    public int askChampionType() throws InvalidSelectionException {
-            System.out.println("\n--- Create Champion ---");
-            System.out.println("1. Mage (HP:500 | DMG:60 | Mana:300)");
-            System.out.println("2. Assassin (HP:600 | DMG:80 | Crit:20)");
-            System.out.println("3. Tank (HP:1000 | DMG:40 | Armor:50)");
-            System.out.println("4. Healer (HP:700 | Heal:150 | Mana:300)");
-            System.out.print("Type: ");
-            int selection = readInt();
-
-            if (selection < 1 || selection > 4) {
-                throw new InvalidSelectionException("Invalid selection");
-            }
-            return selection;
-    }
-
-    public String askName() throws InvalidNameException {
-            System.out.print("Name: ");
-            String name = scanner.nextLine().trim();
-
-            if (name.isEmpty()) {
-                throw new InvalidNameException("Name is empty");
-            }
-
-            return scanner.nextLine().trim();
-
     }
 
     public void listChampions(List<Champion> champions) {
@@ -86,23 +57,6 @@ public class ChampionConsoleService {
 
     public void showRound(int round, String description) {
         System.out.println("\n[Round " + round + " - " + description + "]");
-    }
-
-    public int showInventoryMenu() {
-        System.out.println("\n1. Use consumable");
-        System.out.println("2. Equip armor");
-        System.out.println("0. Back");
-        System.out.print("Option: ");
-        return readInt();
-    }
-
-    public void showInventory(Champion champion) {
-        System.out.println("\n--- " + champion.getName() + " Inventory ---");
-        champion.getInventory().print();
-    }
-
-    public void showShop(Shop shop) {
-        shop.printStock();
     }
 
     public void showStats(Champion champion) {
@@ -153,21 +107,5 @@ public class ChampionConsoleService {
         int value = scanner.nextInt();
         scanner.nextLine();
         return value;
-    }
-
-    public int selectItem(String message) {
-        System.out.print(message + ": ");
-        return readInt() - 1;
-    }
-
-    public EquipmentSlot selectEquipmentSlot() {
-        System.out.println("Slots: ");
-        EquipmentSlot[] slots = EquipmentSlot.values();
-        for (int i = 0; i < slots.length; i++) {
-            System.out.println((i + 1) + ". " + slots[i]);
-        }
-        System.out.print("Slot: ");
-        int index = readInt() - 1;
-        return slots[index];
     }
 }
