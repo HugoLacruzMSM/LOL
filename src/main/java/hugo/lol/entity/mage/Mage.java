@@ -2,7 +2,13 @@ package hugo.lol.entity.mage;
 
 import hugo.lol.entity.Champion;
 import hugo.lol.entity.interfaces.CanAttack;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Setter
+@Getter
+@ToString
 public class Mage extends Champion implements CanAttack {
     int mana;
 
@@ -40,18 +46,5 @@ public class Mage extends Champion implements CanAttack {
             System.out.println(getName() + " has no mana! Uses basic attack instead.");
             attack(champion);
         }
-    }
-
-    public int getMana() {
-        return mana;
-    }
-
-    public void setMana(int mana) {
-        this.mana = mana;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + "Mage{" + "mana=" + mana + '}';
     }
 }

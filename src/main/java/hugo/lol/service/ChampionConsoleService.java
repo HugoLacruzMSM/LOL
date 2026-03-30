@@ -5,9 +5,7 @@ import hugo.lol.entity.assasin.Assassin;
 import hugo.lol.entity.healer.Healer;
 import hugo.lol.entity.mage.Mage;
 import hugo.lol.entity.tank.Tank;
-import hugo.lol.exception.InvalidSelectionException;
 
-import javax.naming.InvalidNameException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -36,6 +34,7 @@ public class ChampionConsoleService {
 * */
         for (int i = 0; i < champions.size(); i++) {
             Champion c = champions.get(i);
+            System.out.println("\n");
             System.out.printf("%d. %s - Lv%d - HP:%d/%d",
                     i + 1, c.getName(),
                     c.getLevel(), c.getHealth(), c.getMaxHealth());
@@ -83,12 +82,11 @@ public class ChampionConsoleService {
 
     public int showMainMenu() {
         System.out.println("\n--- Main Menu ---");
-        System.out.println("1. Create Champion");
-        System.out.println("2. List Champions");
-        System.out.println("3. Show Stats");
-        System.out.println("4. Simulate Combat");
-        System.out.println("5. Level Up");
-        System.out.println("6. Heal");
+        System.out.println("1. List Champions");
+        System.out.println("2. Show Stats");
+        System.out.println("3. Simulate Combat");
+        System.out.println("4. Level Up");
+        System.out.println("5. Heal");
         System.out.println("0. Exit");
         System.out.print("Option: ");
         return readInt();

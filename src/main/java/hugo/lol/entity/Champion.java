@@ -1,7 +1,13 @@
 package hugo.lol.entity;
 
-import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+import java.util.Objects;
+@Setter
+@Getter
+@ToString
 public abstract class Champion {
    private String name;
    private int health;
@@ -50,61 +56,6 @@ public abstract class Champion {
         System.out.println("The champion "+ getName() +" leveled up to " + level);
     }
     public abstract void specialAbility(Champion champion);
-
-
-    public int getDamage() {
-        return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public int getMaxHealth() {
-        return maxHealth;
-    }
-
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getGold() { return gold; }
-
-
-    @Override
-    public String toString() {
-        return "Champion{" +
-                "damage=" + damage +
-                ", name='" + name + '\'' +
-                ", health=" + health +
-                ", maxHealth=" + maxHealth +
-                ", level=" + level +
-                '}';
-    }
 
     @Override
     public boolean equals(Object o) {

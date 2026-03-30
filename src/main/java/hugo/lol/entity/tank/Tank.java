@@ -3,7 +3,13 @@ package hugo.lol.entity.tank;
 import hugo.lol.entity.Champion;
 import hugo.lol.entity.interfaces.CanAttack;
 import hugo.lol.entity.interfaces.CanHeal;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 public class Tank extends Champion implements CanAttack, CanHeal {
 
     int armor;
@@ -49,7 +55,4 @@ public class Tank extends Champion implements CanAttack, CanHeal {
                 + " for " + healAmount + " HP. HP: "
                 + objective.getHealth() + "/" + objective.getMaxHealth());
     }
-
-    public int getArmor() { return armor; }
-    public void setArmor(int armor) { this.armor = armor; }
 }

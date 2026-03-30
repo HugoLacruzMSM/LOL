@@ -2,7 +2,13 @@ package hugo.lol.entity.assasin;
 
 import hugo.lol.entity.Champion;
 import hugo.lol.entity.interfaces.CanAttack;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 public class Assassin extends Champion implements CanAttack {
     int critical;
 
@@ -22,12 +28,5 @@ public class Assassin extends Champion implements CanAttack {
     public void attack(Champion objective) {
         System.out.println("The champion"+ getName() +" is attacking to "+ objective.getName());
         objective.receiveDamage(getDamage());
-    }
-
-    public int getCritical() {
-        return critical;
-    }
-    public void setCritical(int critical) {
-        this.critical = critical;
     }
 }

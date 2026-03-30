@@ -2,7 +2,13 @@ package hugo.lol.entity.healer;
 
 import hugo.lol.entity.Champion;
 import hugo.lol.entity.interfaces.CanHeal;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Setter
+@Getter
+@ToString
 public class Healer extends Champion implements CanHeal {
     int mana;
     private int healPower;
@@ -41,8 +47,4 @@ public class Healer extends Champion implements CanHeal {
                 + " for " + healPower + " HP. HP: "
                 + objective.getHealth() + "/" + objective.getMaxHealth());
     }
-    public int getMana() { return mana; }
-    public void setMana(int mana) { this.mana = mana; }
-    public int getHealPower() { return healPower; }
-    public void setHealPower(int healPower) { this.healPower = healPower; }
 }
