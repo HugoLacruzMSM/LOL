@@ -1,5 +1,6 @@
 package hugo.lol.entity;
 
+import hugo.lol.entity.inventory.Inventory;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,12 +16,14 @@ public abstract class Champion {
    private int damage;
    private int level;
    private int gold;
+   private final Inventory inventory;
 
-    public Champion(String name, int health, int damage) {
+    public Champion(String name, int health, int damage, Inventory inventory) {
         this.name = name;
         this.health = health;
         this.maxHealth = health;
         this.damage = damage;
+        this.inventory = inventory;
         this.level = 1;
         this.gold = 500;
     }
